@@ -1,0 +1,32 @@
+# Python caches and bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# Pytest and coverage
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# Build output
+*.egg-info/
+dist/
+build/
+
+# Editor and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
