@@ -42,5 +42,11 @@ trivy:
   script:
     - docker info
     - docker build -t secureflow-api:$CI_COMMIT_SHA .
-    - trivy image --scanners vuln --severity HIGH,CRITICAL --exit-code 0 secureflow-api:$CI_COMMIT_SHA
+    - trivy image --scanners vuln --severity HIGH,CRITICAL --format table --exit-code 0 secureflow-api:$CI_COMMIT_SHA
+    - trivy image --scanners vuln --severity HIGH,CRITICAL --format json --output trivy-report.json --exit-code 0 secureflow-api:$CI_COMMIT_SHA
     - trivy image --scanners vuln --severity CRITICAL --exit-code 1 secureflow-api:$CI_COMMIT_SHA
+  artifacts:
+    when: always
+    paths:
+      - trivy-report.json
+    expire_in: 7 days
