@@ -1,6 +1,7 @@
 stages:
   - test
   - security
+  - publish
 
 pytest:
   stage: test
@@ -50,3 +51,19 @@ trivy:
     paths:
       - trivy-report.json
     expire_in: 7 days
+
+publish-image:
+  stage: publish
+  image: docker:27-cli
+  services:
+    - name: docker:27-dind
+      alias: docker
+      command: ["--tls=false"]
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
+    - docker build -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" -t "$CI_REGISTRY_IMAGE:latest" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+    - docker push "$CI_REGISTRY_IMAGE:latest"
