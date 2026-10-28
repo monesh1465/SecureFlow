@@ -1,3 +1,31 @@
-# SecureFlow
+# SecureFlow — Automated DevSecOps Security Pipeline
 
-SecureFlow is an automated DevSecOps security pipeline project designed to integrate application testing, security scanning, code quality analysis, and Docker image scanning into a CI/CD workflow. The project uses a Python Flask REST API as its application, Pytest for automated testing, Docker for containerization, and GitLab CI/CD to automate the development and security validation process. Planned security tools include Semgrep for static application security testing (SAST), Gitleaks for secret detection, SonarQube for code quality analysis, and Trivy for container image vulnerability scanning.
+SecureFlow is a Python Flask application integrated with GitLab CI/CD to automate testing, security scanning, code quality analysis, and Docker image publishing.
+
+## Tech Stack
+
+- **Application:** Python, Flask, Pytest
+- **SAST:** Semgrep
+- **Secret Detection:** Gitleaks
+- **Code Quality:** SonarQube Cloud
+- **Container Scanning:** Trivy
+- **Containerization:** Docker
+- **CI/CD & Registry:** GitLab CI/CD, GitLab Container Registry
+
+## Pipeline Workflow
+
+```text
+Git Push
+   |
+   v
+Test (Pytest)
+   |
+   v
+Security Scans
+   |-- Semgrep
+   |-- Gitleaks
+   |-- Trivy
+   |-- SonarQube Cloud
+   |
+   v
+Build & Publish Docker Image
